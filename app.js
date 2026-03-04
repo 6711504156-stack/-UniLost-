@@ -1,16 +1,8 @@
-// Import ฟังก์ชันที่จำเป็นจาก Firebase SDK
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-import { 
-    getFirestore, 
-    collection, 
-    addDoc, 
-    onSnapshot, 
-    query, 
-    orderBy, 
-    serverTimestamp 
-} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+// นำเข้า Firebase Storage
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js";
 
-// Firebase Configuration ของคุณ
 const firebaseConfig = {
   apiKey: "AIzaSyA87_IkAGM7-85Bckfpu6ZMiIDRESWUGgM",
   authDomain: "unilost-422dc.firebaseapp.com",
@@ -21,75 +13,105 @@ const firebaseConfig = {
   measurementId: "G-TZFW7VSGNJ"
 };
 
-// เริ่มต้นใช้งาน Firebase และ Firestore
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const storage = getStorage(app); // เรียกใช้ Storage
 
-// อ้างอิง Elements จาก HTML
 const itemForm = document.getElementById('itemForm');
 const itemList = document.getElementById('itemList');
+const imageUpload = document.getElementById('imageUpload');
+const fileNameDisplay = document.getElementById('fileName');
+const submitBtn = document.getElementById('submitBtn');
 
-// ฟังก์ชัน: บันทึกข้อมูลลง Firestore เมื่อกด Submit ฟอร์ม
+// แสดงชื่อไฟล์เมื่อเลือกรูปภาพ
+imageUpload.addEventListener('change', (e) => {
+    if (e.target.files.length > 0) {
+        fileNameDisplay.textContent = e.target.files[0].name;
+    } else {
+        fileNameDisplay.textContent = "ยังไม่ได้เลือกไฟล์";
+    }
+});
+
 itemForm.addEventListener('submit', async (e) => {
-    e.preventDefault(); // ป้องกันการรีเฟรชหน้าเว็บ
+    e.preventDefault();
     
-    // ดึงค่าจากฟอร์ม
+    // เปลี่ยนสถานะปุ่มเพื่อป้องกันการกดซ้ำตอนกำลังอัปโหลด
+    submitBtn.disabled = true;
+    submitBtn.textContent = "กำลังอัปโหลดข้อมูล...";
+
     const type = document.getElementById('type').value;
     const itemName = document.getElementById('itemName').value;
     const description = document.getElementById('description').value;
     const contact = document.getElementById('contact').value;
+    const file = imageUpload.files[0];
+
+    let imageUrl = "";
 
     try {
-        // เพิ่มข้อมูลลงใน Collection ชื่อ "items"
+        // ถ้ายูสเซอร์แนบรูปมา ให้ทำการอัปโหลดขึ้น Firebase Storage ก่อน
+        if (file) {
+            // สร้างชื่อไฟล์ไม่ให้ซ้ำด้วยเวลาปัจจุบัน
+            const storageRef = ref(storage, 'unilost_images/' + Date.now() + '_' + file.name);
+            await uploadBytes(storageRef, file);
+            imageUrl = await getDownloadURL(storageRef); // ขอ URL รูปที่อัปโหลดเสร็จ
+        }
+
+        // บันทึกข้อมูลข้อความ + URL รูป (ถ้ามี) ลง Firestore
         await addDoc(collection(db, "items"), {
             type: type,
             itemName: itemName,
             description: description,
             contact: contact,
-            timestamp: serverTimestamp() // ใช้เวลาจากเซิร์ฟเวอร์
+            imageUrl: imageUrl, 
+            timestamp: serverTimestamp()
         });
         
-        itemForm.reset(); // ล้างข้อมูลในฟอร์มหลังบันทึกเสร็จ
+        itemForm.reset();
+        fileNameDisplay.textContent = "ยังไม่ได้เลือกไฟล์";
         alert("บันทึกข้อมูลเรียบร้อยแล้ว!");
     } catch (error) {
-        console.error("Error adding document: ", error);
-        alert("เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง");
+        console.error("Error: ", error);
+        alert("เกิดข้อผิดพลาด: " + error.message);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "บันทึกข้อมูล";
     }
 });
 
-// ฟังก์ชัน: ดึงข้อมูลจาก Firestore มาแสดงผลแบบ Real-time
-// สร้าง Query เรียงลำดับจากรายการล่าสุด (desc) ไปเก่าสุด
+// ดึงข้อมูลมาแสดงผลแบบ Real-time
 const q = query(collection(db, "items"), orderBy("timestamp", "desc"));
 
 onSnapshot(q, (snapshot) => {
-    itemList.innerHTML = ""; // ล้างข้อมูลเก่าก่อน
+    itemList.innerHTML = ""; 
     
     if(snapshot.empty) {
-        itemList.innerHTML = "<p style='text-align:center;'>ยังไม่มีรายการแจ้งเข้ามา</p>";
+        itemList.innerHTML = "<p class='loading-text'>ยังไม่มีรายการแจ้งเข้ามา</p>";
         return;
     }
 
     snapshot.forEach((doc) => {
         const data = doc.data();
-        
-        // สร้าง Card สำหรับแต่ละรายการ
         const card = document.createElement('div');
-        card.className = `item-card ${data.type}`;
+        card.className = 'item-card';
         
-        const typeLabel = data.type === 'lost' ? '🚨 ของหาย' : '✅ พบของ';
+        const typeLabel = data.type === 'lost' ? 'ของหาย' : 'พบของ';
+        const typeClass = data.type === 'lost' ? 'lost' : 'found';
         
-        // จัดการเวลา
-        let timeString = 'กำลังบันทึกเวลา...';
+        let timeString = '';
         if (data.timestamp) {
             timeString = data.timestamp.toDate().toLocaleString('th-TH');
         }
 
+        // ตรวจสอบว่ามีรูปภาพไหม ถ้ามีให้แสดงแท็ก img
+        const imageHTML = data.imageUrl ? `<img src="${data.imageUrl}" alt="Item Image">` : '';
+
         card.innerHTML = `
-            <span class="badge ${data.type}">${typeLabel}</span>
+            ${imageHTML}
+            <span class="badge ${typeClass}">${typeLabel}</span>
             <h3>${data.itemName}</h3>
             <p><strong>รายละเอียด:</strong> ${data.description}</p>
-            <p><strong>ติดต่อกลับ:</strong> ${data.contact}</p>
-            <p class="timestamp">🕒 ${timeString}</p>
+            <p><strong>ติดต่อ:</strong> ${data.contact}</p>
+            <p class="timestamp">${timeString}</p>
         `;
         
         itemList.appendChild(card);
