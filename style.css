@@ -6,59 +6,106 @@
 }
 
 body {
-    background-color: #f7f9fa;
-    color: #333;
+    /* พื้นหลังสีพาสเทลนุ่มนวล */
+    background-color: #fdfcf5;
+    /* เพิ่มลายการ์ตูนพื้นหลังแบบเบาบาง (ตัวอย่าง) */
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48ZyBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmY2VhYzkiIGZpbGwtb3BhY2l0eT0iMC4xNSI+PHBhdGggZD0iTTAgMGg0MHY0MEgwVjB6bTIwIDIwaDIwdjIwSDIWMjB6TTAgMjBoMjB2MjBIMFYyMHoyMCAwaDIwdjIwSDIwVjB6Ii8+PC9nPjwvZz48L3N2Zz4=');
+    color: #4a4a4a;
     margin: 0;
     padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 .container {
-    max-width: 600px;
-    margin: 0 auto;
-    background: #ffffff;
+    max-width: 650px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95); /* พื้นหลังโปร่งแสงเล็กน้อย */
     padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    border-radius: 24px;
+    box-shadow: 0 15px 35px rgba(229, 218, 181, 0.3); /* เงาสีอุ่นๆ */
+    border: 2px solid #f9f6e5;
+    position: relative;
+    overflow: hidden;
+}
+
+/* เพิ่มตกแต่งการ์ตูนที่มุมคอนเทนเนอร์ */
+.container::before {
+    content: '🔍';
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    font-size: 40px;
+    transform: rotate(-15deg);
+    opacity: 0.8;
+}
+
+.container::after {
+    content: '✨';
+    position: absolute;
+    bottom: -15px;
+    right: -15px;
+    font-size: 40px;
+    transform: rotate(15deg);
+    opacity: 0.8;
 }
 
 header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 45px;
+    position: relative;
 }
 
 h1 {
-    font-size: 32px;
+    font-size: 38px;
     font-weight: 600;
-    color: #111;
-    margin: 0 0 5px 0;
-    letter-spacing: -0.5px;
+    color: #ff9f43; /* สีส้มสดใส */
+    margin: 0 0 8px 0;
+    letter-spacing: -1px;
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
 }
 
 header p {
-    color: #888;
-    font-size: 14px;
+    color: #8e8e8e;
+    font-size: 15px;
     margin: 0;
+    font-weight: 300;
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 18px;
 }
 
 input, select, textarea {
     width: 100%;
-    padding: 15px;
-    background-color: #f7f9fa;
-    border: 1px solid transparent;
-    border-radius: 12px;
+    padding: 16px 20px;
+    background-color: #fff;
+    border: 2px solid #eee;
+    border-radius: 15px;
     font-size: 15px;
+    color: #555;
     transition: all 0.3s ease;
     outline: none;
 }
 
 input:focus, select:focus, textarea:focus {
-    background-color: #fff;
-    border-color: #e0e0e0;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border-color: #ffdb99; /* สีส้มอ่อนเมื่อโฟกัส */
+    box-shadow: 0 5px 15px rgba(255, 159, 67, 0.1);
+    background-color: #fffaf0;
+}
+
+/* ปรับแต่งสไตล์ Select */
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23AAAAAA%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095.1c3.6-3.6%205.4-7.8%205.4-12.9%200-5-1.8-9.3-5.4-12.9z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat, repeat;
+    background-position: right 15px top 50%, 0 0;
+    background-size: 12px auto, 100%;
+    padding-right: 40px;
 }
 
 /* Custom File Upload */
@@ -70,105 +117,187 @@ input[type="file"] {
     display: flex;
     align-items: center;
     gap: 15px;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 15px;
+    border: 2px dashed #ddd;
 }
 
 .custom-file-upload {
-    padding: 12px 20px;
-    background-color: #f0f2f5;
-    color: #555;
-    border-radius: 10px;
+    padding: 12px 22px;
+    background-color: #fff;
+    color: #ff9f43;
+    border: 2px solid #ff9f43;
+    border-radius: 12px;
     cursor: pointer;
     font-size: 14px;
-    transition: 0.2s;
+    font-weight: 500;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .custom-file-upload:hover {
-    background-color: #e4e6e9;
+    background-color: #ff9f43;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(255, 159, 67, 0.2);
 }
 
 .file-name {
     font-size: 13px;
-    color: #999;
+    color: #a0a0a0;
+    font-weight: 300;
 }
 
 button[type="submit"] {
     width: 100%;
-    padding: 15px;
-    background-color: #111;
+    padding: 16px;
+    background-color: #ff9f43;
     color: white;
     border: none;
-    border-radius: 12px;
-    font-size: 16px;
+    border-radius: 15px;
+    font-size: 17px;
     font-weight: 500;
     cursor: pointer;
-    margin-top: 10px;
-    transition: 0.3s;
+    margin-top: 15px;
+    transition: all 0.3s;
+    box-shadow: 0 5px 15px rgba(255, 159, 67, 0.2);
 }
 
 button[type="submit"]:hover {
-    background-color: #333;
+    background-color: #ff8c2e;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(255, 159, 67, 0.3);
+}
+
+button[type="submit"]:active {
+    transform: translateY(1px);
 }
 
 button[type="submit"]:disabled {
-    background-color: #ccc;
+    background-color: #f3eacb;
+    color: #c9b99a;
     cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
 }
 
 .section-title {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
-    margin: 40px 0 20px 0;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
+    color: #555;
+    margin: 45px 0 25px 0;
+    border-bottom: 3px solid #f9f6e5;
+    padding-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-title::before {
+    content: '📋';
+    font-size: 22px;
 }
 
 .item-list {
     display: grid;
-    gap: 20px;
+    gap: 25px;
 }
 
 .item-card {
     background: #fff;
     border: 1px solid #f0f0f0;
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-    transition: transform 0.2s;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(229, 218, 181, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    border: 2px solid transparent;
 }
 
 .item-card:hover {
-    transform: translateY(-2px);
-    border-color: #e0e0e0;
+    transform: translateY(-4px);
+    border-color: #ffdb99;
+    box-shadow: 0 10px 25px rgba(229, 218, 181, 0.2);
 }
 
 .item-card img {
     width: 100%;
-    height: 200px;
+    height: 220px;
     object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 15px;
+    border-radius: 15px;
+    margin-bottom: 18px;
+    border: 1px solid #f0f0f0;
 }
 
 .badge {
     display: inline-block;
-    padding: 5px 12px;
-    border-radius: 8px;
+    padding: 6px 14px;
+    border-radius: 10px;
     font-size: 12px;
-    font-weight: 500;
-    margin-bottom: 15px;
+    font-weight: 600;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.badge.lost { background-color: #ffeaea; color: #d63031; }
-.badge.found { background-color: #e8f8f5; color: #1abc9c; }
+.badge.lost { 
+    background-color: #ffeaea; 
+    color: #e74c3c; 
+    border: 1px solid #ffcccc;
+}
 
-.item-card h3 { margin: 0 0 10px 0; font-size: 18px; color: #222; }
-.item-card p { margin: 5px 0; font-size: 14px; color: #666; }
-.item-card strong { color: #333; font-weight: 500; }
+.badge.found { 
+    background-color: #e8f8f5; 
+    color: #16a085;
+    border: 1px solid #c3eee5;
+}
+
+.item-card h3 { 
+    margin: 0 0 12px 0; 
+    font-size: 19px; 
+    color: #333; 
+    font-weight: 600;
+}
+
+.item-card p { 
+    margin: 7px 0; 
+    font-size: 14px; 
+    color: #777; 
+    line-height: 1.6;
+}
+
+.item-card strong { 
+    color: #555; 
+    font-weight: 500; 
+    margin-right: 5px;
+}
+
+/* ปรับปรุงส่วนข้อมูลติดต่อให้ดูเด่นขึ้น */
+.item-card p:nth-of-type(2) {
+    background-color: #fef9f3;
+    padding: 10px 15px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 10px;
+    color: #ff8c2e;
+    font-weight: 500;
+    border: 1px solid #fee6d2;
+}
 
 .timestamp {
     font-size: 12px !important;
-    color: #aaa !important;
-    margin-top: 15px !important;
+    color: #b0b0b0 !important;
+    margin-top: 20px !important;
+    text-align: right;
+    display: block;
+    font-weight: 300;
 }
 
-.loading-text { text-align: center; color: #999; }
+.loading-text { 
+    text-align: center; 
+    color: #c9b99a; 
+    font-size: 15px;
+    padding: 30px;
+}
