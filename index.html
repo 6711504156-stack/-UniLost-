@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniLost - ระบบตามหาของหาย</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 UniLost</h1>
+            <p>ระบบแจ้งของหาย / พบของหาย ภายในมหาวิทยาลัย</p>
+        </header>
+
+        <section class="form-section">
+            <h2>📝 แจ้งรายการใหม่</h2>
+            <form id="itemForm">
+                <select id="type" required>
+                    <option value="" disabled selected>-- เลือกประเภท --</option>
+                    <option value="lost">🚨 ของหาย (Lost)</option>
+                    <option value="found">✅ พบของ (Found)</option>
+                </select>
+                <input type="text" id="itemName" placeholder="ชื่อสิ่งของ (เช่น กุญแจรถ, บัตรนักศึกษา)" required>
+                <textarea id="description" placeholder="รายละเอียดเพิ่มเติม (เช่น สี, ยี่ห้อ, จุดที่หายหรือพบ)" rows="3" required></textarea>
+                <input type="text" id="contact" placeholder="ข้อมูลติดต่อกลับ (ชื่อ, เบอร์โทร, หรือ Line ID)" required>
+                <button type="submit">บันทึกข้อมูล</button>
+            </form>
+        </section>
+
+        <section class="list-section">
+            <h2>📋 รายการล่าสุด</h2>
+            <div id="itemList" class="item-list">
+                <p style="text-align: center; color: #888;">กำลังโหลดข้อมูล...</p>
+            </div>
+        </section>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
