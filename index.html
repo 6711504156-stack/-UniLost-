@@ -3,35 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniLost - ระบบตามหาของหาย</title>
+    <title>UniLost @Chandrakasem</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🔍 UniLost</h1>
-            <p>ระบบแจ้งของหาย / พบของหาย ภายในมหาวิทยาลัย</p>
+            <h1>UniLost</h1>
+            <p>ระบบแจ้งของหาย / พบของ ภายในมหาวิทยาลัยจันทรเกษม</p>
         </header>
 
         <section class="form-section">
-            <h2>📝 แจ้งรายการใหม่</h2>
             <form id="itemForm">
-                <select id="type" required>
-                    <option value="" disabled selected>-- เลือกประเภท --</option>
-                    <option value="lost">🚨 ของหาย (Lost)</option>
-                    <option value="found">✅ พบของ (Found)</option>
-                </select>
-                <input type="text" id="itemName" placeholder="ชื่อสิ่งของ (เช่น กุญแจรถ, บัตรนักศึกษา)" required>
-                <textarea id="description" placeholder="รายละเอียดเพิ่มเติม (เช่น สี, ยี่ห้อ, จุดที่หายหรือพบ)" rows="3" required></textarea>
-                <input type="text" id="contact" placeholder="ข้อมูลติดต่อกลับ (ชื่อ, เบอร์โทร, หรือ Line ID)" required>
-                <button type="submit">บันทึกข้อมูล</button>
+                <div class="form-group">
+                    <select id="type" required>
+                        <option value="" disabled selected>เลือกประเภท...</option>
+                        <option value="lost">ของหาย (Lost)</option>
+                        <option value="found">พบของ (Found)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" id="itemName" placeholder="ชื่อสิ่งของ" required>
+                </div>
+
+                <div class="form-group">
+                    <textarea id="description" placeholder="รายละเอียดเพิ่มเติม (สี, จุดที่พบ/หาย)" rows="3" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" id="contact" placeholder="ข้อมูลติดต่อกลับ (Line ID, เบอร์โทร)" required>
+                </div>
+
+                <div class="form-group file-upload-group">
+                    <label for="imageUpload" class="custom-file-upload">
+                        📷 เพิ่มรูปภาพ (ถ้ามี)
+                    </label>
+                    <input type="file" id="imageUpload" accept="image/*">
+                    <span id="fileName" class="file-name">ยังไม่ได้เลือกไฟล์</span>
+                </div>
+
+                <button type="submit" id="submitBtn">บันทึกข้อมูล</button>
             </form>
         </section>
 
         <section class="list-section">
-            <h2>📋 รายการล่าสุด</h2>
+            <h2 class="section-title">รายการล่าสุด</h2>
             <div id="itemList" class="item-list">
-                <p style="text-align: center; color: #888;">กำลังโหลดข้อมูล...</p>
+                <p class="loading-text">กำลังโหลดข้อมูล...</p>
             </div>
         </section>
     </div>
