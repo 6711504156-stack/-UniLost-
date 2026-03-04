@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniLost @Chandrakasem - Pastel Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>UniLost @Chandrakasem - Premium Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
@@ -12,49 +12,62 @@
         }
 
         body {
-            /* พื้นหลังสีชมพูพาสเทลอ่อนๆ พร้อมลายจุด (Polka dots) สุดน่ารัก */
-            background-color: #fff5f8;
-            background-image: radial-gradient(#ffd1dc 2px, transparent 2px);
-            background-size: 30px 30px;
+            background-color: #fff0f5;
             color: #5c4b51;
             margin: 0;
-            padding: 30px 15px;
+            padding: 40px 15px;
             display: flex;
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
-        }
-
-        .container {
-            max-width: 650px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            border-radius: 30px;
-            box-shadow: 0 20px 40px rgba(255, 175, 188, 0.2);
-            border: 3px solid #fff;
             position: relative;
+            overflow-x: hidden;
         }
 
-        /* ของตกแต่งมินิมอลมุมการ์ด */
-        .container::before {
-            content: '🌸';
-            position: absolute;
-            top: -20px;
-            left: -15px;
-            font-size: 45px;
-            transform: rotate(-15deg);
-            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));
+        /* ---------------- ก้อนสีพื้นหลัง (Glowing Blobs) ---------------- */
+        .bg-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: -1;
+            opacity: 0.7;
+            animation: float 10s infinite ease-in-out alternate;
+        }
+        .blob-1 {
+            width: 400px; height: 400px;
+            background: #ffb3c6;
+            top: -100px; left: -100px;
+        }
+        .blob-2 {
+            width: 500px; height: 500px;
+            background: #b5ead7;
+            bottom: -150px; right: -150px;
+            animation-delay: -5s;
+        }
+        .blob-3 {
+            width: 300px; height: 300px;
+            background: #ffd1dc;
+            top: 40%; left: 60%;
+            animation-duration: 15s;
         }
 
-        .container::after {
-            content: '✨';
-            position: absolute;
-            bottom: -15px;
-            right: -15px;
-            font-size: 40px;
-            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 50px) scale(1.1); }
+        }
+
+        /* ---------------- คอนเทนเนอร์หลัก (Glassmorphism) ---------------- */
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 50px;
+            border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(255, 175, 188, 0.15),
+                        inset 0 0 0 2px rgba(255, 255, 255, 0.8);
+            position: relative;
         }
 
         header {
@@ -63,272 +76,343 @@
         }
 
         h1 {
-            font-size: 42px;
-            font-weight: 600;
-            /* ไล่สีพาสเทลชมพู-พีช */
-            background: linear-gradient(120deg, #ff9a9e 0%, #fecfef 100%);
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin: 0 0 10px 0;
-            letter-spacing: -1px;
+            letter-spacing: -1.5px;
+            filter: drop-shadow(0 4px 8px rgba(255,117,140,0.2));
         }
 
         header p {
-            color: #a89f9e;
-            font-size: 15px;
+            color: #887a7d;
+            font-size: 16px;
             margin: 0;
             font-weight: 400;
         }
 
-        .form-group {
-            margin-bottom: 20px;
+        /* ---------------- ปุ่มเปิดฟอร์ม (Premium Button) ---------------- */
+        .btn-add-item {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            background-size: 200% auto;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 50px;
+            transition: 0.4s;
+            box-shadow: 0 10px 25px rgba(255, 154, 158, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
         }
+
+        .btn-add-item:hover {
+            background-position: right center;
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(255, 154, 158, 0.5);
+        }
+
+        /* ---------------- Modal (Pop-up) ---------------- */
+        .modal-overlay {
+            display: none; 
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 240, 245, 0.5);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 40px;
+            border-radius: 35px;
+            width: 100%;
+            max-width: 550px;
+            box-shadow: 0 30px 60px rgba(255, 154, 158, 0.25),
+                        inset 0 0 0 2px rgba(255, 255, 255, 0.9);
+            position: relative;
+            transform: scale(0.9) translateY(30px);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.show .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: #fff;
+            color: #ff758c;
+            border: 2px solid #ffe1e8;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(255, 117, 140, 0.1);
+        }
+
+        .close-btn:hover {
+            background: #ff758c;
+            color: #fff;
+            transform: rotate(90deg);
+        }
+
+        .modal-title {
+            text-align: center;
+            color: #ff758c;
+            font-size: 26px;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        /* ---------------- ฟอร์มอินพุต ---------------- */
+        .form-group { margin-bottom: 22px; }
 
         input, select, textarea {
             width: 100%;
-            padding: 16px 22px;
-            background-color: #fafafa;
-            border: 2px solid #ffe1e8;
-            border-radius: 18px;
-            font-size: 15px;
+            padding: 18px 25px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(255, 225, 232, 0.5);
+            border-radius: 20px;
+            font-size: 16px;
             color: #5c4b51;
             transition: all 0.3s ease;
             outline: none;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
         }
 
         input:focus, select:focus, textarea:focus {
-            border-color: #ffb3c6;
+            border-color: #ff9a9e;
             background-color: #fff;
-            box-shadow: 0 0 0 4px rgba(255, 179, 198, 0.2);
+            box-shadow: 0 0 0 5px rgba(255, 154, 158, 0.15), inset 0 2px 5px rgba(0,0,0,0.01);
+            transform: translateY(-2px);
         }
 
-        /* ตกแต่งปุ่มเลือกไฟล์ (File Upload) */
-        input[type="file"] {
-            display: none;
-        }
+        input[type="file"] { display: none; }
 
         .file-upload-group {
             display: flex;
             align-items: center;
             gap: 15px;
-            background-color: #fff;
-            padding: 12px;
-            border-radius: 18px;
+            background-color: rgba(255, 255, 255, 0.6);
+            padding: 15px;
+            border-radius: 20px;
             border: 2px dashed #ffb3c6;
         }
 
         .custom-file-upload {
-            padding: 10px 20px;
-            background-color: #ffedf1;
-            color: #ff6b8b;
-            border-radius: 12px;
+            padding: 12px 25px;
+            background: #fff;
+            color: #ff758c;
+            border-radius: 15px;
             cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(255, 117, 140, 0.1);
         }
 
         .custom-file-upload:hover {
-            background-color: #ffb3c6;
+            background: #ff758c;
             color: #fff;
+            box-shadow: 0 6px 15px rgba(255, 117, 140, 0.2);
         }
 
-        .file-name {
-            font-size: 13px;
-            color: #a89f9e;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 200px;
-        }
+        .file-name { font-size: 14px; color: #a89f9e; }
 
         button[type="submit"] {
             width: 100%;
-            padding: 18px;
-            background: linear-gradient(120deg, #ffb3c6 0%, #ff9a9e 100%);
+            padding: 20px;
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
             color: white;
             border: none;
-            border-radius: 18px;
+            border-radius: 20px;
             font-size: 18px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 15px;
             transition: all 0.3s;
-            box-shadow: 0 8px 20px rgba(255, 154, 158, 0.3);
+            box-shadow: 0 10px 20px rgba(255, 117, 140, 0.3);
         }
 
-        button[type="submit"]:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(255, 154, 158, 0.4);
-        }
+        button[type="submit"]:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255, 117, 140, 0.4); }
 
-        button[type="submit"]:disabled {
-            background: #f0e6e8;
-            color: #c4b9bb;
-            box-shadow: none;
-            cursor: not-allowed;
-            transform: none;
-        }
-
+        /* ---------------- รายการ (Item Cards) ---------------- */
         .section-title {
-            font-size: 22px;
-            font-weight: 600;
-            color: #ff9a9e;
-            margin: 50px 0 25px 0;
+            font-size: 24px;
+            font-weight: 700;
+            color: #ff758c;
+            margin: 0 0 30px 0;
             text-align: center;
-            position: relative;
         }
 
-        .section-title::before, .section-title::after {
-            content: '🎀';
-            font-size: 18px;
-            margin: 0 10px;
-        }
-
-        .item-list {
-            display: grid;
-            gap: 25px;
-        }
+        .item-list { display: grid; gap: 30px; }
 
         .item-card {
-            background: #fff;
-            border-radius: 24px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(255, 209, 220, 0.3);
-            transition: all 0.3s ease;
-            border: 2px solid #fff9fa;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(255, 175, 188, 0.15),
+                        inset 0 0 0 2px rgba(255, 255, 255, 0.8);
+            transition: all 0.4s ease;
+            opacity: 0; /* ซ่อนไว้รอแอนิเมชัน */
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .item-card:hover {
-            transform: translateY(-5px);
-            border-color: #ffe1e8;
-            box-shadow: 0 15px 35px rgba(255, 209, 220, 0.4);
+            transform: translateY(-8px) scale(1.01);
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 25px 50px rgba(255, 175, 188, 0.25),
+                        inset 0 0 0 2px #fff;
         }
 
         .item-card img {
             width: 100%;
-            height: 250px;
+            height: 280px;
             object-fit: cover;
-            border-radius: 16px;
-            margin-bottom: 20px;
-            background-color: #fcfcfc;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            background-color: #f9f9f9;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
         }
 
         .badge {
             display: inline-block;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            letter-spacing: 0.5px;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
-        /* สีพาสเทลสำหรับสถานะ */
-        .badge.lost { 
-            background-color: #ffdac1; 
-            color: #d16b32; 
-        }
+        .badge.lost { background: #ffe4e1; color: #ff6b6b; border: 1px solid #ffd0d0; }
+        .badge.found { background: #e0f8e9; color: #2ecc71; border: 1px solid #c3eed6; }
 
-        .badge.found { 
-            background-color: #b5ead7; 
-            color: #3b8766; 
-        }
-
-        .item-card h3 { 
-            margin: 0 0 10px 0; 
-            font-size: 20px; 
-            color: #5c4b51; 
-        }
-
-        .item-card p { 
-            margin: 8px 0; 
-            font-size: 15px; 
-            color: #887a7d; 
-            line-height: 1.6;
-        }
-
-        .item-card strong { 
-            color: #ff9a9e; 
-            font-weight: 500; 
-        }
+        .item-card h3 { margin: 0 0 12px 0; font-size: 22px; color: #5c4b51; font-weight: 700; }
+        .item-card p { margin: 10px 0; font-size: 16px; color: #7a6e71; line-height: 1.6; }
+        .item-card strong { color: #ff758c; font-weight: 600; }
 
         .contact-box {
-            background-color: #fdf5f8;
-            padding: 12px 18px;
-            border-radius: 14px;
+            background: linear-gradient(to right, rgba(255, 240, 245, 0.8), rgba(255, 255, 255, 0.8));
+            padding: 15px 20px;
+            border-radius: 18px;
             display: inline-block;
-            margin-top: 10px;
-            color: #ff6b8b;
-            font-weight: 500;
-            border: 1px dashed #ffb3c6;
+            margin-top: 15px;
+            color: #ff758c;
+            font-weight: 600;
+            border-left: 4px solid #ff9a9e;
         }
 
         .timestamp {
-            font-size: 12px !important;
-            color: #c4b9bb !important;
-            margin-top: 20px !important;
+            font-size: 13px !important;
+            color: #bfaeb2 !important;
+            margin-top: 25px !important;
             text-align: right;
             display: block;
         }
 
         .loading-text { 
-            text-align: center; 
-            color: #ffb3c6; 
-            font-size: 16px;
-            padding: 30px;
+            text-align: center; color: #ff9a9e; font-size: 18px; padding: 40px; font-weight: 500;
+            animation: pulse 1.5s infinite alternate;
         }
 
-        /* Toast Notification (แจ้งเตือนแทน Alert แบบเดิม) */
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        /* ---------------- Toast Notification ---------------- */
         .toast {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #fff;
+            position: fixed; bottom: 40px; right: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             color: #5c4b51;
-            padding: 15px 25px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            z-index: 1000;
-            font-weight: 500;
-            border-left: 5px solid #ff9a9e;
+            padding: 18px 30px; border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(255, 117, 140, 0.2);
+            display: flex; align-items: center; gap: 15px;
+            transform: translateY(120px); opacity: 0;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); z-index: 2000;
+            font-weight: 600; font-size: 16px;
+            border: 2px solid #fff;
         }
 
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toastIcon { font-size: 24px; }
 
-        .toast.error {
-            border-left-color: #ffdac1;
-            color: #d16b32;
-        }
-
-        /* ทำให้รองรับมือถือ */
         @media (max-width: 600px) {
-            .container { padding: 30px 20px; border-radius: 20px; }
-            h1 { font-size: 32px; }
+            .container { padding: 30px 20px; border-radius: 30px; }
+            h1 { font-size: 36px; }
+            .modal-content { padding: 30px 20px; }
             .toast { bottom: 20px; right: 20px; left: 20px; justify-content: center; }
         }
     </style>
 </head>
 <body>
+    <!-- สีพื้นหลังลอยๆ -->
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+    <div class="bg-blob blob-3"></div>
+
     <div class="container">
         <header>
             <h1>UniLost</h1>
             <p>ระบบแจ้งของหาย / พบของ ภายในมหาวิทยาลัยจันทรเกษม</p>
         </header>
 
-        <section class="form-section">
+        <button class="btn-add-item" id="openModalBtn">
+            ✨ แจ้งของหาย / พบของ ✨
+        </button>
+
+        <section class="list-section">
+            <h2 class="section-title">รายการล่าสุด 📋</h2>
+            <div id="itemList" class="item-list">
+                <p class="loading-text">กำลังโหลดข้อมูลน่ารักๆ... 🌸</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal Form -->
+    <div class="modal-overlay" id="formModal">
+        <div class="modal-content">
+            <button class="close-btn" id="closeModalBtn">✖</button>
+            <h2 class="modal-title">📝 แจ้งรายการใหม่</h2>
+            
             <form id="itemForm">
                 <div class="form-group">
                     <select id="type" required>
@@ -360,29 +444,19 @@
 
                 <button type="submit" id="submitBtn">บันทึกข้อมูล 💖</button>
             </form>
-        </section>
-
-        <section class="list-section">
-            <h2 class="section-title">รายการล่าสุด</h2>
-            <div id="itemList" class="item-list">
-                <p class="loading-text">กำลังโหลดข้อมูลน่ารักๆ...</p>
-            </div>
-        </section>
+        </div>
     </div>
 
-    <!-- กล่องแจ้งเตือน -->
     <div id="toast" class="toast">
-        <span id="toastIcon">✨</span>
+        <span id="toastIcon" class="toastIcon">✨</span>
         <span id="toastMessage">บันทึกข้อมูลสำเร็จ!</span>
     </div>
 
-    <!-- โค้ด JavaScript สำหรับเชื่อมต่อ Firebase -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js";
 
-        // ตั้งค่า Firebase ตามที่คุณให้มา
         const firebaseConfig = {
             apiKey: "AIzaSyA87_IkAGM7-85Bckfpu6ZMiIDRESWUGgM",
             authDomain: "unilost-422dc.firebaseapp.com",
@@ -397,6 +471,9 @@
         const db = getFirestore(app);
         const storage = getStorage(app);
 
+        const formModal = document.getElementById('formModal');
+        const openModalBtn = document.getElementById('openModalBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
         const itemForm = document.getElementById('itemForm');
         const itemList = document.getElementById('itemList');
         const imageUpload = document.getElementById('imageUpload');
@@ -405,38 +482,29 @@
         const toast = document.getElementById('toast');
         const toastMessage = document.getElementById('toastMessage');
 
-        // ฟังก์ชันแสดงการแจ้งเตือนแบบน่ารักๆ
-        function showToast(message, isError = false) {
-            toastMessage.textContent = message;
-            if (isError) {
-                toast.classList.add('error');
-                document.getElementById('toastIcon').textContent = '🥺';
-            } else {
-                toast.classList.remove('error');
-                document.getElementById('toastIcon').textContent = '🎉';
-            }
-            
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        // อัปเดตชื่อไฟล์เมื่อเลือกรูป
-        imageUpload.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                fileNameDisplay.textContent = e.target.files[0].name;
-            } else {
-                fileNameDisplay.textContent = "ยังไม่ได้เลือกไฟล์...";
-            }
+        openModalBtn.addEventListener('click', () => formModal.classList.add('show'));
+        closeModalBtn.addEventListener('click', () => formModal.classList.remove('show'));
+        formModal.addEventListener('click', (e) => {
+            if (e.target === formModal) formModal.classList.remove('show');
         });
 
-        // ส่งข้อมูลฟอร์ม
+        function showToast(message, isError = false) {
+            toastMessage.textContent = message;
+            document.getElementById('toastIcon').textContent = isError ? '🥺' : '🎉';
+            toast.style.borderLeft = isError ? '4px solid #ff6b6b' : '4px solid #2ecc71';
+            
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        imageUpload.addEventListener('change', (e) => {
+            fileNameDisplay.textContent = e.target.files.length > 0 ? e.target.files[0].name : "ยังไม่ได้เลือกไฟล์...";
+        });
+
         itemForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
             submitBtn.disabled = true;
-            submitBtn.textContent = "กำลังอัปโหลดข้อมูล... ☁️";
+            submitBtn.innerHTML = "กำลังอัปโหลด... ☁️";
 
             const type = document.getElementById('type').value;
             const itemName = document.getElementById('itemName').value;
@@ -454,27 +522,23 @@
                 }
 
                 await addDoc(collection(db, "items"), {
-                    type: type,
-                    itemName: itemName,
-                    description: description,
-                    contact: contact,
-                    imageUrl: imageUrl, 
+                    type, itemName, description, contact, imageUrl, 
                     timestamp: serverTimestamp()
                 });
                 
                 itemForm.reset();
                 fileNameDisplay.textContent = "ยังไม่ได้เลือกไฟล์...";
+                formModal.classList.remove('show');
                 showToast("บันทึกข้อมูลเรียบร้อยแล้ว!");
             } catch (error) {
                 console.error("Error: ", error);
                 showToast("เกิดข้อผิดพลาด: " + error.message, true);
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.textContent = "บันทึกข้อมูล 💖";
+                submitBtn.innerHTML = "บันทึกข้อมูล 💖";
             }
         });
 
-        // ดึงข้อมูลมาแสดงแบบเรียลไทม์
         const q = query(collection(db, "items"), orderBy("timestamp", "desc"));
 
         onSnapshot(q, (snapshot) => {
@@ -485,19 +549,16 @@
                 return;
             }
 
-            snapshot.forEach((doc) => {
+            snapshot.forEach((doc, index) => {
                 const data = doc.data();
                 const card = document.createElement('div');
                 card.className = 'item-card';
+                // ตั้งค่าดีเลย์แอนิเมชันให้การ์ดค่อยๆ เด้งขึ้นมาทีละใบ
+                card.style.animationDelay = `${index * 0.1}s`;
                 
                 const typeLabel = data.type === 'lost' ? '🚨 ของหาย' : '✅ พบของ';
                 const typeClass = data.type === 'lost' ? 'lost' : 'found';
-                
-                let timeString = '';
-                if (data.timestamp) {
-                    timeString = data.timestamp.toDate().toLocaleString('th-TH');
-                }
-
+                const timeString = data.timestamp ? data.timestamp.toDate().toLocaleString('th-TH') : 'กำลังบันทึก...';
                 const imageHTML = data.imageUrl ? `<img src="${data.imageUrl}" alt="ภาพสิ่งของ">` : '';
 
                 card.innerHTML = `
